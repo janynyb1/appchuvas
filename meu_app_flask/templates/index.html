@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuvas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+        }
+        .selector {
+            flex: 1;
+        }
+        .map {
+            flex: 2;
+        }
+        #map {
+            height: 400px; 
+            width: 100%; 
+        }
+    </style>
+</head>
+<body>
+    <h1>App Chuvas</h1>
+    <div class="container">
+        <div class="selector">
+            <form action="/map" method="get">
+                <div class="form-group">
+                    <label for="ano">Ano:</label>
+                    <input type="number" id="ano" name="ano" min="1994" max="2025" required>
+                </div>
+                <div class="form-group">
+                    <label for="mes">Mês:</label>
+                    <input type="number" id="mes" name="mes" min="1" max="12" required>
+                </div>
+                <button id="btn-visualizar-mapa" type="submit">Visualizar Mapa</button>
+
+            </form>
+        </div>
+        <div id="map" class="map-container"></div>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([-23.55, -46.63], 10);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        postos_pluviometricos = {
+    '80': {'latitude': -6.76 ,'longitude': -38.96 ,'dados': {'2023': {'1': 10, '2': 15, '3': 20}}},
+    '133': {'latitude': -3.67, 'longitude': -38.97, 'dados': {'2023': {'1': 5, '2': 8, '3': 12}}},
+    '349': {'latitude': -5.91, 'longitude': -39.26, 'dados': {'2023': {'1': 7, '2': 10, '3': 18}}}
+}
+        Object.values(postos_pluviometricos).forEach(function(posto) {
+            L.marker([posto.latitude, posto.longitude]).addTo(map)
+                .bindPopup('Latitude: ' + posto.latitude + '<br>Longitude: ' + posto.longitude);
+        });
+    </script>
+    <script>
+        document.getElementById('btn-visualizar-mapa').addEventListener('click', function() {
+            
+            obterDadosGraficos();
+        });
+    
+        function obterDadosGraficos() {
+            
+        }
+    </script>
+    
+</body>
+</html>

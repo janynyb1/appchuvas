@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos de Chuva</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            max-width: 800px;
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gráficos de Chuva</h1>
+
+    <canvas id="grafico1"></canvas>
+
+    <canvas id="grafico2"></canvas>
+
+    <canvas id="grafico3"></canvas>
+
+    <script>
+        var ctx1 = document.getElementById('grafico1').getContext('2d');
+        var grafico1 = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março'],
+                datasets: [{
+                    label: 'Dados do Gráfico 1',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    data: [10, 15, 20]
+                }]
+            },
+            options: {}
+        });
+
+        var ctx2 = document.getElementById('grafico2').getContext('2d');
+        var grafico2 = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março'],
+                datasets: [{
+                    label: 'Dados do Gráfico 2',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: [5, 8, 12]
+                }]
+            },
+            options: {}
+        });
+
+        var ctx3 = document.getElementById('grafico3').getContext('2d');
+        var grafico3 = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março'],
+                datasets: [{
+                    label: 'Dados do Gráfico 3',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    data: [7, 10, 18]
+                }]
+            },
+            options: {}
+        });
+    </script>
+    <script>
+        function obter_dados_do_grafico1() {
+            
+            return [10, 20, 30]; 
+        }
+    
+        var ctx1 = document.getElementById('grafico1').getContext('2d');
+        var grafico1 = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março'],
+                datasets: [{
+                    label: 'Dados do Gráfico 1',
+                    data: obter_dados_do_grafico1(), 
+                    borderColor: 'blue',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    
+<div id="dados-csv" data-posto-80="10,15,20" data-posto-133="5,8,12" data-posto-349="7,10,18"></div>
+
+    <script>
+        
+        function obterDadosCSV() {
+            
+            var dadosDiv = document.getElementById('dados-csv');
+            
+            // Obtém os dados CSV para cada posto
+            var dadosPosto80 = dadosDiv.getAttribute('data-posto-80').split(',');
+            var dadosPosto133 = dadosDiv.getAttribute('data-posto-133').split(',');
+            var dadosPosto349 = dadosDiv.getAttribute('data-posto-349').split(',');
+    
+            // Retorna um objeto com os dados para cada posto
+            return {
+                '80': dadosPosto80,
+                '133': dadosPosto133,
+                '349': dadosPosto349
+            };
+        }
+    
+       
+        function criarGraficos() {
+       
+            var dadosCSV = obterDadosCSV();
+    
+            
+            var ctx1 = document.getElementById('grafico1').getContext('2d');
+            var grafico1 = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['Mês 1', 'Mês 2', 'Mês 3'],
+                    datasets: [{
+                        label: 'Posto 80',
+                        data: dadosCSV['80'],
+                        borderColor: 'red',
+                        borderWidth: 1
+                    }]
+                },
+                options: {}
+            });
+    
+            
+            var ctx2 = document.getElementById('grafico2').getContext('2d');
+            var grafico2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ['Mês 1', 'Mês 2', 'Mês 3'],
+                    datasets: [{
+                        label: 'Posto 133',
+                        data: dadosCSV['133'],
+                        borderColor: 'blue',
+                        borderWidth: 1
+                    }]
+                },
+                options: {}
+            });
+    
+            
+            var ctx3 = document.getElementById('grafico3').getContext('2d');
+            var grafico3 = new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: ['Mês 1', 'Mês 2', 'Mês 3'],
+                    datasets: [{
+                        label: 'Posto 349',
+                        data: dadosCSV['349'],
+                        borderColor: 'green',
+                        borderWidth: 1
+                    }]
+                },
+                options: {}
+            });
+        }
+    
+       
+        window.onload = function() {
+            criarGraficos();
+        };
+    </script>
+    
+    
+</body>
+</html>

@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+
+.titulo {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.botao {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+div {
+    margin-bottom: 10px; }
+    .container {
+        display: flex;
+    }
+
+    .selector {
+        flex: 1; 
+        margin-right: 20px; 
+    }
+
+    .map-container {
+        flex: 1;
+        height: 400px; 
+    }
+    
